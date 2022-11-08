@@ -1,0 +1,14 @@
+/** @format */
+
+.NavBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px 0 50px;
+}
+.NavBar__avatar {
+  flex: 0.5;
+}
+.NavBar__Nav {
+  flex: 0.5;
+}

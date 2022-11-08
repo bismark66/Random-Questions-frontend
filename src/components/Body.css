@@ -1,0 +1,10 @@
+/** @format */
+
+.questionBankBox {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
