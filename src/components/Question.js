@@ -19,29 +19,6 @@ function Question({
   handleSave,
   selectedAns,
 }) {
-  // function selectedAns(e) {
-  //   let clickedAnswer = e.target;
-  //   console.log(clickedAnswer.innerText, ":", correctAnswer);
-
-  //   if (clickedAnswer.innerText == correctAnswer) {
-  //     clickedAnswer.style.cssText += "background-color:green;color:white";
-  //   } else {
-  //     clickedAnswer.style.cssText += "background-color:red;color:white";
-
-  //     console.log(clickedAnswer.parentElement.children);
-  //     let parentchildren = clickedAnswer.parentElement.children;
-  //     console.log(typeof parentchildren);
-
-  //     console.log(Object.values(parentchildren[1]));
-
-  //     Object.entries(parentchildren).map(([child, value]) => {
-  //       if (value.innerText == correctAnswer) {
-  //         value.style.cssText += "color:white;background-color:green";
-  //       }
-  //     });
-  //   }
-  // }
-
   return (
     <>
       <Modal show={show} onHide={handleClose}>

@@ -3,9 +3,8 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
-function Questionslist(props) {
-  const { Question, yourAnswer, answer, Date } = props;
-  // console.log(answer);
+function Questionslist({ question, yourAnswer, answer, Date, handleDelete }) {
+  console.log("Question list has been called");
   return (
     <div>
       <Card
@@ -15,9 +14,16 @@ function Questionslist(props) {
       >
         <Card.Header>{"Your Question at " + Date}</Card.Header>
         <Card.Body>
-          <Card.Title>{props.question}</Card.Title>
-          <Card.Text>{props.yourAnswer}</Card.Text>
+          <Card.Title>{question}</Card.Title>
+          <Card.Text>{yourAnswer}</Card.Text>
         </Card.Body>
+        <Card.Link
+          href="#"
+          onClick={() => handleDelete(question)}
+          style={{ textDecoration: "none", color: "#fff" }}
+        >
+          DELETE
+        </Card.Link>
       </Card>
     </div>
   );

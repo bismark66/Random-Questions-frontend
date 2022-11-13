@@ -1,7 +1,7 @@
 /** @format */
 import React, { useEffect, useState } from "react";
 import http_requests from "../configs/http_requests";
-import getQuestions from "../configs/http_requests";
+//import getQuestions from "../configs/http_requests";
 import NavBar from "./Nav";
 import Question from "./Question";
 import Questionslist from "./questions/questions-list";
@@ -11,6 +11,7 @@ function Body() {
   const url = "https://the-trivia-api.com/api/questions?limit=1&difficulty=";
 
   const [questionBank, setQuestionBank] = useState([]);
+  const [deleteState, setDeleteState] = useState(false);
   const [show, setShow] = useState(false);
   const [query, setQuery] = useState({
     ques: "",
@@ -52,21 +53,15 @@ function Body() {
   }
 
   const handleSave = async () => {
-    console.log(postResponse);
-    // let Question = ques;
-    // let Answer = correctans;
-    // let yourAnswer = yourAnswer;
     let results = await http_requests.postQuestion(postResponse);
-    console.log(results);
-    //insert question bank and hhtp post here
-
-    console.log("saved changes was clicked");
+    //  console.log(results);
+    // console.log("saved changes was clicked");
   };
 
   useEffect(() => {
     getQuestions();
     async function fetchQuestion() {
-      console.log(url + getLevel());
+      //  console.log(url + getLevel());
       const response = await fetch(url + getLevel());
       const jsonResponse = await response.json();
 
@@ -95,7 +90,6 @@ function Body() {
         ...query,
         ...updateSetQuery,
       }));
-      // console.log(query);
     }
 
     fetchQuestion();
@@ -104,15 +98,26 @@ function Body() {
 
   const getQuestions = async () => {
     let results = await http_requests.getQuestions();
-    //console.log(results);
     setQuestionBank(results);
+  };
+
+  useEffect(() => {
+    getQuestions();
+    // console.log("getQuestionsHasbeen called");
+    setDeleteState(false);
+  }, [deleteState]);
+
+  const handleDelete = async (Question) => {
+    console.log("check Question here", Question);
+    await http_requests.deleteQuestion(Question);
+    setDeleteState(true);
   };
 
   function selectedAns(e) {
     console.log(e);
     let clickedAnswer = e.target;
     let yourChosenAnswer = e.target.textContent;
-    console.log(clickedAnswer.textContent);
+    //console.log(clickedAnswer.textContent);
 
     let updatePostResonse = {};
     updatePostResonse = {
@@ -132,11 +137,11 @@ function Body() {
     } else {
       clickedAnswer.style.cssText += "background-color:red;color:white";
 
-      console.log(clickedAnswer.parentElement.children);
+      //  console.log(clickedAnswer.parentElement.children);
       let parentchildren = clickedAnswer.parentElement.children;
-      console.log(typeof parentchildren);
+      //  console.log(typeof parentchildren);
 
-      console.log(Object.values(parentchildren[1]));
+      //  console.log(Object.values(parentchildren[1]));
 
       Object.entries(parentchildren).map(([child, value]) => {
         if (value.innerText == correctans) {
@@ -169,6 +174,7 @@ function Body() {
               answer={question.Answer}
               question={question.Question}
               Date={question.Date}
+              handleDelete={handleDelete}
             />
           );
         })}

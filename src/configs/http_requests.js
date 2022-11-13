@@ -32,7 +32,21 @@ const postQuestion = (allAboutQuestion) => {
       });
   });
 };
+const deleteQuestion = (Question) => {
+  console.log(Question);
+  new Promise((success, fail) => {
+    axios
+      .delete(`${url}/${Question}?`)
+      .then(function (res) {
+        console.log("this is res", res);
+        success(res.data);
+      })
+      .catch(function (err) {
+        fail(err);
+      });
+  });
+};
 
-const HTTP_REQUESTS = { getQuestions, postQuestion };
+const HTTP_REQUESTS = { getQuestions, postQuestion, deleteQuestion };
 
 export default HTTP_REQUESTS;
