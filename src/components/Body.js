@@ -5,11 +5,12 @@ import http_requests from "../configs/http_requests";
 import NavBar from "./Nav";
 import Question from "./Question";
 import Questionslist from "./questions/questions-list";
+import Pagination from "react-bootstrap/Pagination";
 import "./Body.css";
 
 function Body() {
   const url = process.env.REACT_APP_EXTERNAL_API_URL;
-
+  const [currentPage, setCurrentPage] = useState(1);
   const [questionBank, setQuestionBank] = useState([]);
   const [deleteState, setDeleteState] = useState(false);
   const [show, setShow] = useState(false);
@@ -139,6 +140,31 @@ function Body() {
     }
   }
 
+  const itemsPerPage = 15;
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = questionBank.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(questionBank.length / itemsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const paginationItems = [];
+  for (let i = 1; i <= totalPages; i++) {
+    paginationItems.push(
+      <Pagination.Item
+        key={i}
+        active={i === currentPage}
+        onClick={() => handlePageChange(i)}
+      >
+        {i}
+      </Pagination.Item>
+    );
+  }
+
   return (
     <div>
       <NavBar alterShow={() => setShow(true)} getLevel={getLevel} />
@@ -153,18 +179,30 @@ function Body() {
         handleSave={handleSave}
         selectedAns={selectedAns}
       />
-      <div className="questionBankBox">
-        {questionBank.map((question) => {
-          return (
-            <Questionslist
-              yourAnswer={question.yourAnswer}
-              answer={question.Answer}
-              question={question.Question}
-              Date={question.Date}
-              handleDelete={handleDelete}
-            />
-          );
-        })}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          alignItems: "center",
+          height: "90vh",
+        }}
+      >
+        <div className="questionBankBox">
+          {currentItems.map((item, index) => {
+            return (
+              <Questionslist
+                yourAnswer={item.yourAnswer}
+                answer={item.Answer}
+                question={item.Question}
+                Date={item.Date}
+                handleDelete={handleDelete}
+              />
+            );
+          })}
+        </div>
+
+        <Pagination>{paginationItems}</Pagination>
       </div>
     </div>
   );
