@@ -4,7 +4,7 @@ import React from "react";
 import { Card } from "react-bootstrap";
 
 function Questionslist({ question, yourAnswer, answer, Date, handleDelete }) {
-  console.log("Question list has been called");
+  // console.log("Question list has been called");
   return (
     <div>
       <Card

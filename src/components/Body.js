@@ -19,6 +19,7 @@ function Body() {
     level: "",
     correctans: "",
   });
+
   const [postResponse, setPostResponse] = useState({
     Question: "",
     Answer: "",
@@ -54,6 +55,7 @@ function Body() {
 
   const handleSave = async () => {
     let results = await http_requests.postQuestion(postResponse);
+    setShow(false);
     //  console.log(results);
     // console.log("saved changes was clicked");
   };
@@ -66,9 +68,9 @@ function Body() {
       const jsonResponse = await response.json();
 
       const { correctAnswer, question, incorrectAnswers } = jsonResponse[0];
-      console.log(
-        question + ":" + correctAnswer + " incorrect answer " + incorrectAnswers
-      );
+      // console.log(
+      //   question + ":" + correctAnswer + " incorrect answer " + incorrectAnswers
+      // );
 
       let answerArray = [];
       answerArray.push(incorrectAnswers, correctAnswer);
@@ -108,13 +110,13 @@ function Body() {
   }, [deleteState]);
 
   const handleDelete = async (Question) => {
-    console.log("check Question here", Question);
+    // console.log("check Question here", Question);
     await http_requests.deleteQuestion(Question);
     setDeleteState(true);
   };
 
   function selectedAns(e) {
-    console.log(e);
+    // console.log(e);
     let clickedAnswer = e.target;
     let yourChosenAnswer = e.target.textContent;
     //console.log(clickedAnswer.textContent);
@@ -130,7 +132,7 @@ function Body() {
       ...postResponse,
       ...updatePostResonse,
     }));
-    console.log(clickedAnswer.innerText, ":", correctans);
+    // console.log(clickedAnswer.innerText, ":", correctans);
 
     if (clickedAnswer.innerText == correctans) {
       clickedAnswer.style.cssText += "background-color:green;color:white";
