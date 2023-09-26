@@ -4,10 +4,7 @@ import React from "react";
 import { Nav, NavDropdown } from "react-bootstrap";
 
 import Avatar from "@mui/material/Avatar";
-//import { Avatar } from "@mui/material/Avatar";
 import "./Nav.css";
-///static/images/avatar/1.jpg
-//src\assets\images\logo.jpg
 
 function NavBar({ alterShow, getLevel }) {
   return (
