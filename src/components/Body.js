@@ -8,7 +8,7 @@ import Questionslist from "./questions/questions-list";
 import "./Body.css";
 
 function Body() {
-  const url = "https://the-trivia-api.com/api/questions?limit=1&difficulty=";
+  const url = process.env.REACT_APP_EXTERNAL_API_URL;
 
   const [questionBank, setQuestionBank] = useState([]);
   const [deleteState, setDeleteState] = useState(false);
@@ -54,23 +54,17 @@ function Body() {
   }
 
   const handleSave = async () => {
-    let results = await http_requests.postQuestion(postResponse);
+    http_requests.postQuestion(postResponse);
     setShow(false);
-    //  console.log(results);
-    // console.log("saved changes was clicked");
   };
 
   useEffect(() => {
     getQuestions();
     async function fetchQuestion() {
-      //  console.log(url + getLevel());
       const response = await fetch(url + getLevel());
       const jsonResponse = await response.json();
 
       const { correctAnswer, question, incorrectAnswers } = jsonResponse[0];
-      // console.log(
-      //   question + ":" + correctAnswer + " incorrect answer " + incorrectAnswers
-      // );
 
       let answerArray = [];
       answerArray.push(incorrectAnswers, correctAnswer);
@@ -105,21 +99,18 @@ function Body() {
 
   useEffect(() => {
     getQuestions();
-    // console.log("getQuestionsHasbeen called");
+
     setDeleteState(false);
   }, [deleteState]);
 
   const handleDelete = async (Question) => {
-    // console.log("check Question here", Question);
     await http_requests.deleteQuestion(Question);
     setDeleteState(true);
   };
 
   function selectedAns(e) {
-    // console.log(e);
     let clickedAnswer = e.target;
     let yourChosenAnswer = e.target.textContent;
-    //console.log(clickedAnswer.textContent);
 
     let updatePostResonse = {};
     updatePostResonse = {
@@ -132,18 +123,13 @@ function Body() {
       ...postResponse,
       ...updatePostResonse,
     }));
-    // console.log(clickedAnswer.innerText, ":", correctans);
 
     if (clickedAnswer.innerText == correctans) {
       clickedAnswer.style.cssText += "background-color:green;color:white";
     } else {
       clickedAnswer.style.cssText += "background-color:red;color:white";
 
-      //  console.log(clickedAnswer.parentElement.children);
       let parentchildren = clickedAnswer.parentElement.children;
-      //  console.log(typeof parentchildren);
-
-      //  console.log(Object.values(parentchildren[1]));
 
       Object.entries(parentchildren).map(([child, value]) => {
         if (value.innerText == correctans) {
@@ -169,7 +155,6 @@ function Body() {
       />
       <div className="questionBankBox">
         {questionBank.map((question) => {
-          // console.log(question);
           return (
             <Questionslist
               yourAnswer={question.yourAnswer}

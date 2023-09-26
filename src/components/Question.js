@@ -7,32 +7,22 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import List from "./List";
 import "./Question.css";
-//import ListGroup from "react-bootstrap/ListGroup";
 
-function Question({
-  correctAnswer,
-  answers,
-  question,
-  handleShow,
-  handleClose,
-  show,
-  handleSave,
-  selectedAns,
-}) {
+function Question(props) {
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton={handleClose}>
+      <Modal show={props.show} onHide={props.handleClose}>
+        <Modal.Header closeButton={props.handleClose}>
           <Modal.Title>Random Question</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p className="modalQuestion">{question}</p>
+          <p className="modalQuestion">{props.question}</p>
           <ListGroup as="ol">
-            {answers.map((element) => {
+            {props.answers.map((element) => {
               return (
                 <List
-                  correctAnswer={correctAnswer}
-                  selectedAns={(e) => selectedAns(e)}
+                  correctAnswer={props.correctAnswer}
+                  selectedAns={(e) => props.selectedAns(e)}
                   item={element}
                 />
               );
@@ -40,10 +30,10 @@ function Question({
           </ListGroup>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={props.handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleSave()}>
+          <Button variant="primary" onClick={() => props.handleSave()}>
             Save Changes
           </Button>
         </Modal.Footer>
